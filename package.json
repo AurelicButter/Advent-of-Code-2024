@@ -1,0 +1,42 @@
+{
+	"name": "aoc-2024",
+	"version": "1.0.0",
+	"description": "Collection of AOC 2024 Solutions",
+	"main": "./build/src/runPuzzle.js",
+	"scripts": {
+		"build": "tsc",
+		"watch": "tsc -w",
+		"launch": "tsc && node build/src/runPuzzle.js",
+		"eslint": "eslint .",
+		"eslint:fix": "eslint . --fix",
+		"prettier": "prettier --write .",
+		"prepare": "husky install",
+		"start": "./build/src/index.js",
+		"createday": "tsc && node build/src/createDay.js"
+	},
+	"author": {
+		"name": "Frederick Katsura",
+		"email": "fkatsura@katsurin.com"
+	},
+	"license": "MIT",
+	"lint-staged": {
+		"*.{js,json,jsx,ts,tsx}": [
+			"prettier --write",
+			"eslint --fix --quiet"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.0",
+		"@typescript-eslint/eslint-plugin": "^8.16.0",
+		"@typescript-eslint/parser": "^8.16.0",
+		"eslint": "^9.15.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.2.10",
+		"prettier": "^3.4.1",
+		"typescript": "^5.7.2"
+	},
+	"dependencies": {
+		"axios": "^1.7.8"
+	}
+}
