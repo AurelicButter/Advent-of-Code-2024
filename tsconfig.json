@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"outDir": "./build",
 		"allowJs": true,
-		"target": "ES2024",
+		"target": "ESNext",
 		"moduleResolution": "node",
 		"module": "commonjs",
 		"esModuleInterop": true,
