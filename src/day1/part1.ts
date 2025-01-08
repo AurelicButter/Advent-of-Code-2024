@@ -11,13 +11,6 @@ values.forEach(value => {
     right.push(currR);
 });
 
-left.sort();
 right.sort();
 
-let sum = 0;
-
-left.forEach((x, i) => {
-    sum += Math.abs(x * right[i]);
-});
-
-console.log(sum);
+console.log(left.sort().reduce((a, b, i) => a + Math.abs(b - right[i]), 0))
