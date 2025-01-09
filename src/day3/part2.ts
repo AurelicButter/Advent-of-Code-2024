@@ -13,7 +13,7 @@ values.forEach(value => {
             value = value.substring(currMul);
 
             const currEnd = value.indexOf(")");
-            let currBlock = value.substring(0, currEnd + 1);
+            const currBlock = value.substring(0, currEnd + 1);
 
             if (enabled && currBlock.match(/^mul\(\d{1,3},\d{1,3}\)/)) {
                 sum += currBlock
@@ -28,7 +28,7 @@ values.forEach(value => {
         } else {
             value = value.substring(currInstruct);
             const currEnd = value.indexOf(")");
-            let currBlock = value.substring(0, currEnd + 1);
+            const currBlock = value.substring(0, currEnd + 1);
 
             if (currBlock == "don't()") {
                 enabled = false;

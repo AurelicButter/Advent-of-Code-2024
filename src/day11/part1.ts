@@ -10,7 +10,7 @@ while (rounds > 0) {
         if (stone == 0) {
             values[i] = 1;
         } else if (stone.toString().length % 2 == 0) {
-            let temp = stone.toString();
+            const temp = stone.toString();
 
             values.splice(i, 1, Number(temp.substring(temp.length / 2)));
             values.splice(i, 0, Number(temp.substring(0, temp.length / 2)));

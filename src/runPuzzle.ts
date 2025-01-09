@@ -20,6 +20,7 @@ async function menuDisplay() {
 		throw new Error("Script file does not exist");
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	require(myFile);
 }
 

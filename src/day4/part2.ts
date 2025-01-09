@@ -11,13 +11,13 @@ for (let y = 1; y < values.length - 1; y++) {
             continue;
         }
 
-        let NW = values[y-1][x-1];
-        let NE = values[y-1][x+1];
-        let SW = values[y+1][x-1];
-        let SE = values[y+1][x+1];       
+        const NW = values[y-1][x-1];
+        const NE = values[y-1][x+1];
+        const SW = values[y+1][x-1];
+        const SE = values[y+1][x+1];       
 
-        let left = (NW == "M" && SE == "S") || (NW == "S" && SE == "M");
-        let right = (NE == "M" && SW == "S") || (NE == "S" && SW == "M");
+        const left = NW == "M" && SE == "S" || NW == "S" && SE == "M";
+        const right = NE == "M" && SW == "S" || NE == "S" && SW == "M";
 
         if (left && left == right) {
             sum++;

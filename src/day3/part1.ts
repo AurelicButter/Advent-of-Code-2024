@@ -9,7 +9,7 @@ values.forEach(value => {
 
     while (currIndex != -1) {
         const currEnd = value.indexOf(")");
-        let currBlock = value.substring(0, currEnd + 1);
+        const currBlock = value.substring(0, currEnd + 1);
 
         if (currBlock.match(/^mul\(\d{1,3},\d{1,3}\)/)) {
             const numbers = currBlock.substring(4, currBlock.length - 1).split(",").map(x => Number(x));

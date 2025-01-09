@@ -15,33 +15,32 @@ const compat = new FlatCompat({
 });
 
 export default [{
-    ignores: ["**/*.json", "**/build/", "**/node_modules"],
+    ignores: ["**/*.json", "**/build/", "**/node_modules"]
 }, ...compat.extends(
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended"
 ), {
     plugins: {
-        "@typescript-eslint": typescriptEslint,
+        "@typescript-eslint": typescriptEslint
     },
 
     languageOptions: {
         globals: {
             ...globals.commonjs,
-            ...globals.node,
+            ...globals.node
         },
 
         parser: tsParser,
         ecmaVersion: 6,
-        sourceType: "module",
+        sourceType: "module"
     },
 
     rules: {
         "no-extra-parens": "error",
-        eqeqeq: "warn",
         "no-else-return": "error",
         "comma-dangle": "warn",
         "no-var": "error",
-        camelcase: "warn",
-    },
+        camelcase: "warn"
+    }
 }];

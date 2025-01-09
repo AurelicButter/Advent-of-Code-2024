@@ -23,7 +23,7 @@ const grid = values.map((value, i) => {
 
 let spotForward = grid[y - 1][x];
 let direction = 0;
-let orignalPath = new Set<string>();
+const orignalPath = new Set<string>();
 
 while (spotForward != undefined) {
     let dirChange = false;
@@ -89,9 +89,9 @@ function traversePath(coord: {x: number, y: number}, guard: { x: number, y: numb
             const key = `${guard.x},${guard.y},${guard.dir}`;
             if (visited.has(key)) {               
                 return 1;
-            } else {
+            } 
                 visited.add(key);
-            }
+            
         }
 
         switch (guard.dir) {

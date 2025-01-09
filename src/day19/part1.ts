@@ -29,4 +29,4 @@ function checkTowel(order: string): boolean {
     return false;
 }
 
-console.log(values.reduce((a, b) => (a + Number(checkTowel(b))), 0));
+console.log(values.reduce((a, b) => a + Number(checkTowel(b)), 0));

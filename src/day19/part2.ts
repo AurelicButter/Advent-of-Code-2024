@@ -35,4 +35,4 @@ function checkTowel(order: string): number {
 
 towels.forEach(towel => checkTowel(towel)); // Updates cache to include known patterns.
 
-console.log(values.reduce((a, b) => (a + Number(checkTowel(b))), 0));
+console.log(values.reduce((a, b) => a + Number(checkTowel(b)), 0));
