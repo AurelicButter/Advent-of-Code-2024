@@ -28,6 +28,26 @@ class FileBlock extends EmptyBlock {
     }
 }
 
+class CheckSum extends EmptyBlock {
+    sum = 0;
+
+    constructor(block) {
+        super(block.amt);
+    }
+
+    updateSum(block) {
+        if (block.id == undefined) {
+            this.amt += block.amt;
+            return;
+        }
+
+        for (let i = 0; i < block.amt; i++) {
+            this.sum += this.amt * block.id;
+            this.amt++;
+        }
+    }
+}
+
 function equalSpace(fi, bi, disk) {
     disk[bi] = disk[fi];
     disk.splice(fi, 1, disk[fi].emptyCopy());
@@ -45,55 +65,41 @@ function smallSpace(fi, bi, disk) {
 
 const disk = values.map((block, i) => i % 2 == 0 ? new FileBlock(block) : new EmptyBlock(block));
 
-disk[0]["checked"] = true; // First file always at index 0. No need to check.
+disk[0] = new CheckSum(disk[0] as FileBlock); // First file always at index 0. No need to check.
 
 let fileIndex = disk.length - 1;
 let emptyIndex = 1;
 while (true) {
-    const rightFile = disk[fileIndex] as FileBlock;
-    const currEmpty = disk[emptyIndex] as EmptyBlock;
-    
-    if (currEmpty == undefined) {
-        break;
-    }
-
-    if (rightFile.amt == currEmpty.amt) {
+    if (disk[fileIndex].amt == disk[emptyIndex].amt) {
         equalSpace(fileIndex, emptyIndex, disk);
-    } else if (rightFile.amt < currEmpty.amt) {
+    } else if (disk[fileIndex].amt < disk[emptyIndex].amt) {
         smallSpace(fileIndex, emptyIndex, disk);
     } else { // File larger than emptyIndex
-        let change = false;
+        disk[fileIndex]["checked"] = true;
 
         for (let i = emptyIndex; i < fileIndex; i++) {
             if (disk[i].constructor.name == "FileBlock") {
                 continue;
             }
 
-            if (disk[i].amt == rightFile.amt) {
+            if (disk[i].amt == disk[fileIndex].amt) {
                 equalSpace(fileIndex, i, disk);                
-                change = true;
                 break;
-            } else if (disk[i].amt > rightFile.amt) {
+            } else if (disk[i].amt > disk[fileIndex].amt) {
                 smallSpace(fileIndex, i, disk);
-                change = true;
                 break;
             }
         }
+    }
 
-        if (!change) {
-            disk[fileIndex]["checked"] = true;
+    for (let i = 1; i + 1 < disk.length; i++) {
+        if (i == 1 && disk[i].constructor.name == "FileBlock") {
+            (disk[0] as CheckSum).updateSum(disk[i] as FileBlock);
+            disk.splice(i, 1);
+            i--;
+            continue;
         }
-    }
 
-    for (emptyIndex = 0; emptyIndex < disk.length; emptyIndex++) {
-        if (disk[emptyIndex].constructor.name == "EmptyBlock") { break; }
-    }
-
-    for (fileIndex = disk.length - 1; fileIndex >= 0; fileIndex--) {
-        if (disk[fileIndex]["id"] && disk[fileIndex]["checked"] == false) { break; }
-    }
-
-    for (let i = 0; i + 1 < disk.length; i++) {
         if (
             disk[i].constructor.name == "EmptyBlock" &&
             disk[i + 1].constructor.name == "EmptyBlock"
@@ -103,17 +109,17 @@ while (true) {
         }
     }
 
+    for (emptyIndex = 1; emptyIndex < disk.length; emptyIndex++) {
+        if (disk[emptyIndex].constructor.name == "EmptyBlock") { break; }
+    }
+
+    for (fileIndex = disk.length - 1; fileIndex >= 0; fileIndex--) {
+        if (disk[fileIndex]["id"] && disk[fileIndex]["checked"] == false) { break; }
+    }
+
     if (fileIndex < 0) {
         break;
     }
 }
 
-const expanded = [];
-
-disk.forEach((block: FileBlock) => {
-    for (let i = 0; i < block.amt; i++) {
-        expanded.push(block.id || 0);
-    }
-});
-
-console.log(expanded.reduce((a, b, i) => a + b * i, 0));
+console.log(disk.reduce((a: CheckSum, b) => { a.updateSum(b); return a; }, disk.shift())["sum"]);
